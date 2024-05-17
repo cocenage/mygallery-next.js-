@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "comments",
+  "info": {
+    "singularName": "comment",
+    "pluralName": "comments",
+    "displayName": "Comment",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "paintings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::painting.painting",
+      "mappedBy": "comment"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
