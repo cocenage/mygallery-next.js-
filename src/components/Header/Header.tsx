@@ -16,15 +16,15 @@ const Header = () => {
         <header>
             <nav className="px-16 py-10">
                 <div className="flex flex-wrap justify-between items-center ">
-                    <div className="bg-white rounded-full flex   ">
-                        <Link href="https://flowbi1te.com" className="flex items-center rounded-full p-4 hover:bg-zinc-200 duration-300">
-                            <span className=" text-black">Картина</span>
+                    <div className="bg-black  rounded-full flex   ">
+                        <Link href="https://flowbi1te.com" className="flex items-center rounded-full p-4 hover:bg-zinc-200 duration-300 text-white hover:text-black">
+                            <span className=" ">Картина</span>
                         </Link>
-                        <Link href="https://flowbi1te.com" className="flex items-center rounded-full p-4 hover:bg-zinc-200 duration-300">
-                            <span className=" text-black">Автор</span>
+                        <Link href="https://flowbi1te.com" className="flex items-center rounded-full p-4 hover:bg-zinc-200 duration-300 text-white hover:text-black">
+                            <span className=" ">Автор</span>
                         </Link>
                     </div>
-                    <div className="flex items-center bg-white rounded-full border-none group hover:bg-black duration-300 text-black hover:text-white">
+                    <div className="flex items-center bg-zinc-200 rounded-full border-none group hover:bg-black duration-300 text-black hover:text-white">
                         {
                             user ?
                                 <>
