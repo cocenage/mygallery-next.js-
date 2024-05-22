@@ -1,4 +1,4 @@
-import Filter from "@/components/Filter/Filter";
+import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import Name from "@/components/Name/Name";
 import Net from "@/components/Net/Net";
@@ -8,9 +8,9 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Filter />
       <Name />
       <Net />
+      <Footer/>
     </>
   );
 }

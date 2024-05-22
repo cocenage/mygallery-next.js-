@@ -1,35 +1,3 @@
-import React, { useState } from 'react';
-
-const CommentForm = ({ paintingId }) => {
-  const [comment, setComment] = useState('');
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    const response = await fetch('/api/comments', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ paintingId, text: comment }),
-    });
-
-    if (response.ok) {
-      // Обновить список комментариев или обновить страницу
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <textarea value={comment} onChange={(e) => setComment(e.target.value)} />
-      <button type="submit">Отправить комментарий</button>
-    </form>
-  );
-};
-
-export default CommentForm;
-
-
 // pages/api/comments.js
 
 import { getSession } from 'next-auth/client';

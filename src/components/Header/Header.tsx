@@ -16,11 +16,11 @@ const Header = () => {
         <header>
             <nav className="px-16 py-10">
                 <div className="flex flex-wrap justify-between items-center ">
-                    <div className="bg-black  rounded-full flex   ">
-                        <Link href="https://flowbi1te.com" className="flex items-center rounded-full p-4 hover:bg-zinc-200 duration-300 text-white hover:text-black">
+                    <div className="bg-black  rounded-full flex  border-inset ">
+                        <Link href="/" className="flex items-center rounded-full p-4 hover:bg-zinc-200 hover:border-bg-zinc-200 duration-300 text-white hover:text-black">
                             <span className=" ">Картина</span>
                         </Link>
-                        <Link href="https://flowbi1te.com" className="flex items-center rounded-full p-4 hover:bg-zinc-200 duration-300 text-white hover:text-black">
+                        <Link href="/" className="flex items-center rounded-full p-4 hover:bg-zinc-200 duration-300 text-white hover:text-black">
                             <span className=" ">Автор</span>
                         </Link>
                     </div>
@@ -40,7 +40,7 @@ const Header = () => {
                                 :
                                 <>
                                     <li className="flex items-center rounded-full p-4">
-                                        <LoginLink className=''>Войти</LoginLink>
+                                        <LoginLink className=''>Вход</LoginLink>
                                     </li>
                                     <li className="flex items-center rounded-full p-4 bg-black z-10">
                                         <RegisterLink className='text-white'>Регистрация</RegisterLink>

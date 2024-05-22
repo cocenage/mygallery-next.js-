@@ -5,85 +5,73 @@ import useSinglePainting from '@/hooks/useSinglePainting';
 import Link from 'next/link';
 import Comments from '@/components/Comments/Comments';
 import useComments from '@/hooks/useComments';
-
+import Header from '@/components/Header/Header';
+import useReviews from '@/hooks/useComments';
+import Footer from '@/components/Footer/Footer';
 
 export default function page({ params }) {
 
   const detailArticle = useSinglePainting(params.id);
-  const commentsList = useComments();
-
+  // const commentsList = useComments(params.id);
+  const reviewsList = useReviews();
 
   return (
-    <section className='px-16 py-10'>
-      <div className="grid grid-cols-3 gap-12">
-        <div className="">
-          {detailArticle?.attributes?.image?.data.attributes?.url ?
-            <Image src={process.env.NEXT_PUBLIC_STRAPI_API_URL + (detailArticle?.attributes?.image?.data.attributes?.url ?? '')} alt='' width={500} height={500} className='' />
-            :
-            <div className='w-full h-full bg-zinc-800 animate-pulse'></div>
-          }
-        </div>
-        <div className="">
+    <>
+      <Header />
+      <section className='px-16 py-10'>
 
-          <div className="">
-            <div className="  rounded-xl flex justify-between items-center ">
-              <Image className="object-cover object-center rounded-full w-12 h-12" src={process.env.NEXT_PUBLIC_STRAPI_API_URL + (detailArticle?.attributes?.image?.data.attributes?.url ?? '')} alt="ava" width={40} height={40} />
-              <div className=" flex flex-col justify-center mr-36">
-
-                <p className="text-black text-[12px]">
-                {detailArticle?.attributes?.author?.data.attributes?.name}
-                </p>
-                <p className="text-black text-[12px]">
-                {detailArticle?.attributes?.author?.data.attributes?.description}
-                </p>
-
-              </div>
-              <Link href="https://flowbi1te.com" className="flex items-center rounded-full p-4 bg-zinc-200 duration-300  text-black">
-                <span className=" ">больше работ</span>
-              </Link>
-            </div>
-            <div className="pt-16">
-              <h1>{detailArticle?.attributes?.name}</h1>
-            </div>
-            <div className="pt-10">
-              <h2>{detailArticle?.attributes?.description}</h2>
-            </div>
+        <div className="grid grid-cols-3 gap-12">
+          <div className="flex rounded-full">
+            {detailArticle?.attributes?.image?.data.attributes?.url ?
+              <Image src={process.env.NEXT_PUBLIC_STRAPI_API_URL + (detailArticle?.attributes?.image?.data.attributes?.url ?? '')} alt='' width={500} height={500} className='' />
+              :
+              <div className='w-full h-full bg-zinc-800 animate-pulse'></div>
+            }
           </div>
-        </div>
-        <div className="">
-          <p>комментарии</p>
           <div className="">
 
-            {commentsList.length > 0 ? commentsList.map((item, index) => {
-              return (
+            <div className="py-10">
+              <div className="  rounded-xl flex justify-between items-center ">
+                <div className="flex ">
+                  <Image className="object-cover object-center rounded-full w-14 h-14" src={process.env.NEXT_PUBLIC_STRAPI_API_URL + (detailArticle?.attributes?.author?.data.image?.data.attributes?.url ?? '')} alt="ava" width={40} height={40} />
+                  <div className=" flex flex-col justify-center mr-36 pl-4">
 
-                <div key={index} className=" text-black p-4 antialiased flex">
-                  <img className="rounded-full h-8 w-8 mr-2 mt-1 " src="/1.png" />
-                  <div>
-                    <div className=" px-2 pt-2 pb-2.5">
-                      <div className="font-semibold text-sm leading-relaxed">{item.attributes?.name}</div>
-                      <div className="text-normal leading-snug md:leading-normal"
-                      >{item.attributes?.description}</div>
-                    </div>
-                    {/* <div className="text-sm ml-4 mt-0.5 text-gray-500 dark:text-gray-400">{item.attributes?.createdAt}</div> */}
+                    <p className="text-black text-[14px]">
+                      {detailArticle?.attributes?.author?.data.attributes?.name}
+                    </p>
+                    <p className="text-black text-[14px]">
+                      {detailArticle?.attributes?.author?.data.attributes?.description}
+                    </p>
 
                   </div>
                 </div>
-              )
-            })
-              :
-              [1, 2, 3, 4, 5].map((item, index) => {
-                return (
-                  <div key={index} className="w-full h-[500px] rounded-xl bg-zinc-800 animate-pulse"></div>
-                );
-              })}
+                <Link href="https://flowbi1te.com" className="flex items-center rounded-full p-4 bg-zinc-200 duration-300  text-black">
+                  <span className=" ">больше работ</span>
+                </Link>
+              </div>
+              <div className="pt-16 text-black text-[40px]">
+                <h1>{detailArticle?.attributes?.name}</h1>
+              </div>
+              <div className="pt-10 text-black text-[20px]">
+                <h2>{detailArticle?.attributes?.description}</h2>
+              </div>
+            </div>
+          </div>
+          <div className="py-14">
+            <p className='text-black text-[18px]'>комментарии</p>
+            <div className="relative h-full">
+
+
+              <div className="absolute inset-x-0 bottom-0">
+                <Comments />
+              </div>
+            </div>
 
 
           </div>
-          <Comments />
-
         </div>
-      </div>
-    </section>
+      </section>
+      <Footer />
+    </>
   )
 }

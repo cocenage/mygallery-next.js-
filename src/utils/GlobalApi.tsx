@@ -12,17 +12,23 @@ const axiosClient = axios.create({
 // API - запросы
 const getPaintings = () => axiosClient.get('/paintings?populate=*');
 
-const getComments  = () => axiosClient.get('/comments?populate=*');
+const getAuthor = () => axiosClient.get('/authors?populate=*');
+
+const getComments = () => axiosClient.get('/commens?populate=*');
+// const getComments  = () => axiosClient.get('/comments?populate=*');
 
 const getSinglePainting = (id) => axiosClient.get('/paintings?filters[slug][$eqi]=' + id + '&populate=*');
 
-const createOrder = (data: any) => axiosClient.post('/comments', data);
+// const getComments = (paintings) => axiosClient.get('/comments?filters[paintings][id][$in]=' + paintings + '&populate=*');
+const createOrder = (data: any) => axiosClient.post('/commens', data);
+
 
 export default {
     getPaintings,
     
     getComments,
-
+    getAuthor,
+    
     getSinglePainting,
 
     createOrder

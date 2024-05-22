@@ -11,7 +11,6 @@ const usePaintings = () => {
   
     const getPaintings = () => {
       GlobalApi.getPaintings().then(resp => {
-        console.log(resp.data.data);
         setPaintingsList(resp.data.data);
       });
     }
