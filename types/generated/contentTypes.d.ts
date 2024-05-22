@@ -590,6 +590,53 @@ export interface PluginContentReleasesReleaseAction
   };
 }
 
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
+  info: {
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+          max: 50;
+        },
+        number
+      >;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUsersPermissionsPermission
   extends Schema.CollectionType {
   collectionName: 'up_permissions';
@@ -741,17 +788,17 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface PluginI18NLocale extends Schema.CollectionType {
-  collectionName: 'i18n_locale';
+export interface PluginCommentManagerComment extends Schema.CollectionType {
+  collectionName: 'comments';
   info: {
-    singularName: 'locale';
-    pluralName: 'locales';
-    collectionName: 'locales';
-    displayName: 'Locale';
+    singularName: 'comment';
+    pluralName: 'comments';
+    displayName: 'Comment';
     description: '';
   };
   options: {
     draftAndPublish: false;
+    comment: '';
   };
   pluginOptions: {
     'content-manager': {
@@ -762,25 +809,127 @@ export interface PluginI18NLocale extends Schema.CollectionType {
     };
   };
   attributes: {
-    name: Attribute.String &
-      Attribute.SetMinMax<
-        {
-          min: 1;
-          max: 50;
-        },
-        number
-      >;
-    code: Attribute.String & Attribute.Unique;
+    content: Attribute.Text;
+    author: Attribute.Relation<
+      'plugin::comment-manager.comment',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    subcomments: Attribute.Relation<
+      'plugin::comment-manager.comment',
+      'oneToMany',
+      'plugin::comment-manager.subcomment'
+    >;
+    from_admin: Attribute.Boolean;
+    related_to: Attribute.Relation<
+      'plugin::comment-manager.comment',
+      'manyToOne',
+      'plugin::comment-manager.content-id'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'plugin::i18n.locale',
+      'plugin::comment-manager.comment',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'plugin::i18n.locale',
+      'plugin::comment-manager.comment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface PluginCommentManagerSubcomment extends Schema.CollectionType {
+  collectionName: 'subcomments';
+  info: {
+    singularName: 'subcomment';
+    pluralName: 'subcomments';
+    displayName: 'Subcomment';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+    comment: '';
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    content: Attribute.Text;
+    author: Attribute.Relation<
+      'plugin::comment-manager.subcomment',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    parent_comment: Attribute.Relation<
+      'plugin::comment-manager.subcomment',
+      'manyToOne',
+      'plugin::comment-manager.comment'
+    >;
+    from_admin: Attribute.Boolean;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::comment-manager.subcomment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::comment-manager.subcomment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface PluginCommentManagerContentId extends Schema.CollectionType {
+  collectionName: 'content_ids';
+  info: {
+    singularName: 'content-id';
+    pluralName: 'content-ids';
+    displayName: 'ContentID';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+    comment: '';
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    slug: Attribute.String & Attribute.Unique;
+    comments: Attribute.Relation<
+      'plugin::comment-manager.content-id',
+      'oneToMany',
+      'plugin::comment-manager.comment'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::comment-manager.content-id',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::comment-manager.content-id',
       'oneToOne',
       'admin::user'
     > &
@@ -825,36 +974,37 @@ export interface ApiAuthorAuthor extends Schema.CollectionType {
   };
 }
 
-export interface ApiCommentComment extends Schema.CollectionType {
-  collectionName: 'comments';
+export interface ApiCommenCommen extends Schema.CollectionType {
+  collectionName: 'commens';
   info: {
-    singularName: 'comment';
-    pluralName: 'comments';
-    displayName: 'Comment';
+    singularName: 'commen';
+    pluralName: 'commens';
+    displayName: 'Commen';
     description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    description: Attribute.Text & Attribute.Required;
-    paintings: Attribute.Relation<
-      'api::comment.comment',
-      'oneToMany',
+    text: Attribute.String & Attribute.Required;
+    painting: Attribute.Relation<
+      'api::commen.commen',
+      'manyToOne',
       'api::painting.painting'
     >;
-    name: Attribute.String & Attribute.Required;
+    isActive: Attribute.Boolean & Attribute.DefaultTo<false>;
+    date: Attribute.Date;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::comment.comment',
+      'api::commen.commen',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::comment.comment',
+      'api::commen.commen',
       'oneToOne',
       'admin::user'
     > &
@@ -884,10 +1034,10 @@ export interface ApiPaintingPainting extends Schema.CollectionType {
       'manyToOne',
       'api::author.author'
     >;
-    comment: Attribute.Relation<
+    commen: Attribute.Relation<
       'api::painting.painting',
-      'manyToOne',
-      'api::comment.comment'
+      'oneToMany',
+      'api::commen.commen'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -921,12 +1071,15 @@ declare module '@strapi/types' {
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
+      'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'plugin::i18n.locale': PluginI18NLocale;
+      'plugin::comment-manager.comment': PluginCommentManagerComment;
+      'plugin::comment-manager.subcomment': PluginCommentManagerSubcomment;
+      'plugin::comment-manager.content-id': PluginCommentManagerContentId;
       'api::author.author': ApiAuthorAuthor;
-      'api::comment.comment': ApiCommentComment;
+      'api::commen.commen': ApiCommenCommen;
       'api::painting.painting': ApiPaintingPainting;
     }
   }

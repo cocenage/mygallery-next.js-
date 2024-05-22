@@ -43,11 +43,11 @@
       "target": "api::author.author",
       "inversedBy": "paintings"
     },
-    "comment": {
+    "commen": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::comment.comment",
-      "inversedBy": "paintings"
+      "relation": "oneToMany",
+      "target": "api::commen.commen",
+      "mappedBy": "painting"
     }
   }
 }

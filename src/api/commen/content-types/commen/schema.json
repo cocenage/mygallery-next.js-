@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "commens",
+  "info": {
+    "singularName": "commen",
+    "pluralName": "commens",
+    "displayName": "Commen",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true
+    },
+    "painting": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::painting.painting",
+      "inversedBy": "commen"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": false
+    },
+    "date": {
+      "type": "date"
+    }
+  }
+}

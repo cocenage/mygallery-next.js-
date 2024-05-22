@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * comment controller
+ * commen controller
  */
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::comment.comment');
+module.exports = createCoreController('api::commen.commen');
